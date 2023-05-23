@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\StudentProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
@@ -45,3 +46,5 @@ Route::middleware(['auth:sanctum', 'abilities:admin,level-1'])->group(function()
     Route::get('/admin/allStudents', [AdminController::class, 'allStudents']);
     Route::post('/admin/add_student', [StudentController::class, 'store']);
 });
+
+Route::get('/admin/student/{id}', [StudentProfileController::class, 'profile']);
