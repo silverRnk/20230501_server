@@ -11,7 +11,7 @@ class AddTeacherRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,9 @@ class AddTeacherRequest extends FormRequest
      */
     public function rules(): array
     {
+    
         return [
-            //
+            //TODO define validation rule
         ];
     }
 }
