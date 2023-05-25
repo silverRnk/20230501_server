@@ -11,4 +11,16 @@ use Laravel\Sanctum\HasApiTokens;
 class Teacher extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable;
+
+    protected $fillable = [
+        'name',
+        'gender',
+        'date_of_birth',
+        'email',
+        'phone_no'
+    ];
+
+    protected $hidden = [
+        'password'
+    ]
 }
