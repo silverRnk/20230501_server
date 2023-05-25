@@ -2,8 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\GradeLevel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+
 
 class TeachersCollection extends ResourceCollection
 {
@@ -14,7 +16,11 @@ class TeachersCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        //TODO define json format
-        return parent::toArray($request);
+        return [
+            'teachers' => TeacherResource::collection($this->collection),
+            'grade_levels' => GradeLevelsResource::collection(
+                GradeLevel::query()->orderBy('level', 'asc')->get()
+            )
+        ];
     }
 }
