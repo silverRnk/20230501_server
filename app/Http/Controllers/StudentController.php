@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ParentInfo;
 use App\Models\Student;
 use App\Http\Requests\AddStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
@@ -9,6 +10,7 @@ use App\Http\Resources\StudentResource;
 use Illuminate\Http\Request;
 use App\Http\Requests\StudentLoginRequest;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -30,21 +32,42 @@ class StudentController extends Controller
     public function store(AddStudentRequest $request)
     {
         $data = $request->validated();
-        /** @var \App\Models\Student $student */
-        // $student = Student::create([
-        //     'std_Name' => ($data['std_first_name'].' '.$data['std_last_name']),
-        //     'std_Gender' => $data['std_gender'],
-        //     'std_date_of_birth' => $data['std_date_of_birth'],
-        //     'std_parents_guardian' => $data['std_parents_guardian'],
-        //     'std_Email' => $data['std_Email'],
-        //     'std_Password' => bcrypt($data['std_Password']),
-        //     'std_Photo' => $data['std_photo'],
-        //     'std_cp_number' => $data['std_cp_number'],
-        //     'tchr_Id' => 1,
-        //     'class_Id' => $data['std_class'],
-        //     'school_Id' => 1
-        // ]);
 
+        /** @var \App\Models\Student $student */
+        $student = Student::create([
+            'std_name' => $data['std_first_name'].' '.$data['std_last_name'],
+            'std_gender' => $data['std_gender'],
+            'std_date_of_birth' => $data['std_date_of_birth'],
+            'std_religion' => $data['std_religion'],
+            // 'std_phone' => $data['std_phone'],
+            'std_email' => $data['std_email'],
+            'password' => bcrypt($data['std_password']),
+            'std_photo' => null,
+            'std_status' => 'new',
+            'tchr_Id' => 1, // remove from table add to sections table
+            'grade_level_id' => 'nrs',
+            'section_id'=> '1',
+            'school_Id' => 1
+        ]);
+
+        $parentInfo = ParentInfo::create([
+            'fathers_name' => $data['fathers_name'],
+            'mothers_name' => $data['mothers_name'],
+            'fathers_occupation' => $data['fathers_occupation'],
+            'parents_phone_no' => $data['parents_phone'],
+            'parents_religion' => $data['parents_religion'],
+            'parents_email' => $data['parents_email'],
+            'student_id' => $student->std_ID
+        ]);
+
+        $file = $data['std_photo'];
+        // dd($file);
+        $file_name = $student->std_ID.'.'.$file->extension();
+        $file_path = Storage::putFileAs(
+            'student_profile_imgs', $file, $file_name);
+        $student->std_photo = $file_path;
+        $student->save();
+        
         return response(['message' => ['student is added successfully']], 201) ;
         
     }

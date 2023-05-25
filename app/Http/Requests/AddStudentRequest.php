@@ -29,14 +29,15 @@ class AddStudentRequest extends FormRequest
             'std_last_name' => 'required|string',
             'std_gender' => ['required','in:male,female'],
             'std_date_of_birth' => ['required', 'date'],
+            'std_religion' => ['string'],
             'std_phone' => ['required', 'numeric'],
-            'std_email' => 'required|email|unique:students,std_Email',
+            'std_email' => 'required|email|unique:students,std_email',
             'std_password' => ['required', 'confirmed',
             Password::min(6)
             ->letters()],
             'std_grade' => ['required', 'string'],
             'std_section' => ['required', 'string'],
-            'std_photo' => ['nullable'],
+            'std_photo' => ['file','image','nullable', 'max:1024'],
 
             'fathers_name' => ['required', 'string'],
             'mothers_name' => ['required', 'string'],

@@ -32,18 +32,22 @@ class Student extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'std_Name',
-        'std_Gender',
+        'std_name',
+        'std_gender',
         'std_email',
-        'std_password',
-        'std_Photo',
+        'password',
+        'std_photo',
         'std_date_of_birth',
-        'std_parents_guardian',
-        'std_cp_number',
+        'std_religion',
+        'std_email',
+        'std_status',
         'tchr_Id',
-        'class_Id',
+        'grade_level_id',
+        'section_id',
         'school_Id'
     ];
+
+
     /**
      * The attributes that should be hidden for arrays.
      *
