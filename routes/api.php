@@ -25,26 +25,21 @@ Route::middleware('auth:sanctum')->group(function () {
     
 });
 
-Route::get('/students', [StudentController::class, 'index']);
-Route::get('/my_msg', function () {
-    return 'hello';
-});
-
-
-Route::post('/post_test', function () {return response(["message" => "Foo"], 201);});
-Route::apiResource('/test', StudentController::class);
-Route::post('/signup', [AuthController::class, 'signup']);
-Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('student/login', [StudentController::class, 'login']);
 Route::get('/student/details', [StudentController::class, 'StudentInfo'])->middleware(['auth:sanctum', 'abilities:student']);
 
 Route::post('/admin/login', [AdminController::class, 'login']);
 
-Route::middleware(['auth:sanctum', 'abilities:admin,level-1'])->group(function(){
-    Route::get('/admin/details', [AdminController::class, 'index']);
-    Route::get('/admin/allStudents', [AdminController::class, 'allStudents']);
-    Route::post('/admin/add_student', [StudentController::class, 'store']);
+Route::middleware(['auth:sanctum', 'abilities:admin,level-1'])
+->prefix('admin')
+->group(function(){
+    Route::get('/details', [AdminController::class, 'index']);
+    Route::get('/allStudents', [AdminController::class, 'allStudents']);
+    Route::post('/add_student', [StudentController::class, 'store']);
+    Route::get('/student/{id}', [StudentProfileController::class, 'profile']);
 });
 
-Route::get('/admin/student/{id}', [StudentProfileController::class, 'profile']);
+require_once __DIR__.'/api/TeachersApiRoutes.php';
+
+
