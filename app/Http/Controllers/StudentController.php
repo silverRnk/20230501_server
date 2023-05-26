@@ -144,7 +144,6 @@ class StudentController extends Controller
 
         $student = Student::where('std_ID', $std_id)->get();
 
-
         return new StudentResource($student);
     }
 }
