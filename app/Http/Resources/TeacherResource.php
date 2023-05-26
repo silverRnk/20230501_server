@@ -21,7 +21,8 @@ class TeacherResource extends JsonResource
             'teacher_gender' => $this->gender,
             'teacher_class' => $this->advisory_class,
             'teacher_addr' => $this->date_of_birth,
-            'teacher_phone' => $this->phone_no
+            'teacher_phone' => $this->phone_no,
+            'teacher_admission_date'  => $this->admission_date
         ];
     }
 }

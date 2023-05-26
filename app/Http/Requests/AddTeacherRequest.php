@@ -35,7 +35,8 @@ class AddTeacherRequest extends FormRequest
             'phone_no' => ['required', 'numeric'],
             'advisory_class' => ['string', 'nullable'],
             'profile_img' => ['file', 'image', 'max:1024', 'nullable'],
-            'password' => [Password::min(6), 'required', 'confirmed']
+            'password' => [Password::min(6), 'required', 'confirmed'],
+            'admission_date' => ['required', 'date']
         ];
     }
 
@@ -50,7 +51,8 @@ class AddTeacherRequest extends FormRequest
             'password.confirmed' => 'Confirm your password',
             'profile_img.max' => 'Maximum image size must be less than 1Mb',
             'profile_img.image' => 'File must be an image',
-            'profile_img.file' => 'Uploaded must be a file and an image'
+            'profile_img.file' => 'Uploaded must be a file and an image',
+            '*.date' => 'Invalid Input'
         ];
     }
 
