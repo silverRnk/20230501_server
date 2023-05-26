@@ -40,9 +40,11 @@ class StudentFactory extends Factory
             'std_email' => fake()->unique()->safeEmail(),
             'std_gender' => $gender ,
             'password' => bcrypt('changeme'),
-            'std_photo' => $gender === 'male'?
-                fake()->randomElement($profileImgLinksMale):
-                fake()->randomElement($profileImgLinksFemale),
+            'std_photo' => fake()->randomElement(
+                $gender === 'male'?
+                $profileImgLinksMale:
+                $profileImgLinksFemale
+            ),
             'std_date_of_birth' => fake()->dateTime(),
             'std_religion' => 'baptist',
             'std_status' => $status,

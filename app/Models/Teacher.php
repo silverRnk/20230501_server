@@ -22,5 +22,5 @@ class Teacher extends Authenticatable
 
     protected $hidden = [
         'password'
-    ]
+    ];
 }

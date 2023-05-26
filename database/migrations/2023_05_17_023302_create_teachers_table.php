@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->enum('gender', ['male', 'female']);
             $table->date('date_of_birth');
+            $table->string('religion')->nullable();
+            $table->string('advisory_class')->nullable();
+            $table->string('profile_img');
             $table->string('email');
             $table->string('phone_no');
             $table->string('password');
