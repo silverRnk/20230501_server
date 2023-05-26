@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ClassSection extends Model
 {
@@ -27,6 +28,13 @@ class ClassSection extends Model
         return $this->hasMany(
             Student::class,
             'section_id'
+        );
+    }
+
+    public function advisor(): HasOne {
+
+        return $this->hasOne(
+            Teacher::class, 'advisory_class'
         );
     }
 

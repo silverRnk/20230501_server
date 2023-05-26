@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Notifications\Notifiable;
@@ -23,4 +24,12 @@ class Teacher extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    public function classAdvisory(): BelongsTo {
+        
+        return $this->belongsTo(
+            ClassSection::class, 'advisory_class')
+            ->withDefault();
+        
+    }
 }
