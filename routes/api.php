@@ -38,8 +38,10 @@ Route::middleware(['auth:sanctum', 'abilities:admin,level-1'])
     Route::get('/allStudents', [AdminController::class, 'allStudents']);
     Route::post('/add_student', [StudentController::class, 'store']);
     Route::get('/student/{id}', [StudentProfileController::class, 'profile']);
+
+    require_once __DIR__.'/api/TeachersApiRoutes.php';
 });
 
-require_once __DIR__.'/api/TeachersApiRoutes.php';
+
 
 
