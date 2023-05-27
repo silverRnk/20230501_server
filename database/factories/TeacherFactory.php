@@ -36,6 +36,7 @@ class TeacherFactory extends Factory
                 'Baptist',
                 'Catholic'
             ]),
+            'address' => fake()->address(),
             'email' => fake()->unique()->email(),
             'phone_no' => fake()->phoneNumber(),
             'password' => bcrypt('changeme'),
@@ -44,7 +45,8 @@ class TeacherFactory extends Factory
                 $gender === 'male'?
                 $profileImgLinksMale:
                 $profileImgLinksFemale
-            )
+            ),
+            'admission_date' => fake()->date()
         ];
     }
 }

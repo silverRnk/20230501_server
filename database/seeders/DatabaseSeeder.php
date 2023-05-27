@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
 
         $this->callOnce([
             GradeLevelSeeder::class,
-            TeacherSeeder::class
+            TeacherSeeder::class,
+            DefaultSeeder::class,
             ]
         );
     }

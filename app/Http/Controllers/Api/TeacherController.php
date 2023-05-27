@@ -16,14 +16,14 @@ class TeacherController extends Controller
 
         return new TeachersCollection(
             Teacher::query()
-            ->orderBy('id', 'desc')
+            ->orderBy('uuid', 'desc')
             ->paginate(10)
         );
 
     }
 
     public function add(AddTeacherRequest $request){
-        //TODO
+        
         $data = $request->validated();
 
         //Create Row
@@ -31,11 +31,13 @@ class TeacherController extends Controller
             'name' => $data['first_name'].' '.$data['last_name'],
             'gender' => $data['gender'],
             'date_of_birth' => $data['date_of_birth'],
+            'address' => $data['addr_line1'],
             'religion' => $data['religion'],
             'advisory_class' => $data['advisory_class'],
             'email' => $data['email'],
             'phone_no' => $data['phone_no'],
-            'password' => bcrypt($data['password'])
+            'password' => bcrypt($data['password']),
+            'admission_date' => $data['admission_date']
         ]
         );
 
@@ -43,7 +45,7 @@ class TeacherController extends Controller
         $file = $data['profile_img'];
     
         //Rename Image
-        $file_name = $teacher->id.'.'.$file->extension();
+        $file_name = $teacher->uuid.'.'.$file->extension();
         
         //Save Image to storage then get the file path
         $img_path = Storage::putFileAs('teacher_profile_imgs', $file, $file_name);

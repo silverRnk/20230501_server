@@ -12,14 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('teachers', function (Blueprint $table) {
-            $table->uuid('id')->unique();
+            $table->uuid('uuid')->unique();
             $table->string('name');
             $table->enum('gender', ['male', 'female']);
             $table->date('date_of_birth');
             $table->string('religion')->nullable();
+            $table->string('address');
             $table->foreignId('advisory_class')
-            ->constrained('class_sections')
-            ->nullable();
+            ->nullable()
+            ->constrained('class_sections', 'id');
+            // $table->unsignedBigInteger('advisory_class')
+            // ->nullable()
+            // ->unsigned();
             $table->string('profile_img')->nullable();
             $table->string('email');
             $table->string('phone_no');

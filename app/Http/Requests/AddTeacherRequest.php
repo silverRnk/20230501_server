@@ -47,6 +47,7 @@ class AddTeacherRequest extends FormRequest
             'gender.in' => 'Input must be either male or female',
             'email.unique' => 'Email already exists',
             'email.required' => 'Input is required',
+            'email.email' => 'Must be a valid email',
             'password.min' => 'Input must be minimum of 6 character',
             'password.confirmed' => 'Confirm your password',
             'profile_img.max' => 'Maximum image size must be less than 1Mb',

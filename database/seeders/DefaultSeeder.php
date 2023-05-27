@@ -42,8 +42,6 @@ class DefaultSeeder extends Seeder
 
         $stdId = Student::create($student)->std_ID;
 
-        Log::info($stdId);
-
         $parent = [
             'fathers_name' => fake()->name('male'),
             'mothers_name' => fake()->name('female'),
@@ -57,12 +55,6 @@ class DefaultSeeder extends Seeder
 
         ParentModel::create($parent);
 
-        $user = [
-            'name' => 'Patrick',
-            'email' => 'patdi@exmail.com',
-            'password' => bcrypt('changeme')
-        ];
 
-        User::create($user);
     }
 }
