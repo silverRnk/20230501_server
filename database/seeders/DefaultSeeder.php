@@ -25,6 +25,13 @@ class DefaultSeeder extends Seeder
 
         Admin::create($data);
 
+        $data1['name'] = "Mr Admin";
+        $data1['privilege'] = 1;
+        $data1['email'] = 'admin@email.com';
+        $data1['password'] = bcrypt('changeme');
+
+        Admin::create($data1);
+
         $student = [
             'std_name' => 'Diana Bautista',
             'std_email' => 'diana@exmail.com',
@@ -45,7 +52,7 @@ class DefaultSeeder extends Seeder
         $parent = [
             'fathers_name' => fake()->name('male'),
             'mothers_name' => fake()->name('female'),
-            'fathers_occupation' => 'Plumber',
+            'fathers_occupation' => 'Store Owner',
             'parents_phone_no' => fake()->phoneNumber(),
             'parents_email' => fake()->unique()->safeEmail(),
             'parents_religion' => 'baptist',

@@ -18,18 +18,20 @@ class StudentProfileResource extends JsonResource
         $img_path = explode('/', $this->std_photo);
 
         return [
-            'std_id' => $this->std_ID,
-            'std_name' => $this->std_name,
-            'std_gender'=> $this->std_gender,
-            'std_photo'=>'/student_img/'.$img_path[1],
-            'std_dob' => $this->std_date_of_birth,
-            'std_religion' => $this->std_religion,
-            'std_email' => $this->std_email,
+            'id_number' => $this->std_ID,
+            'name' => $this->std_name,
+            'gender'=> $this->std_gender,
+            'profile_img'=>'/student_img/'.$img_path[1],
+            'date_of_birth' => $this->std_date_of_birth,
+            'religion' => $this->std_religion,
+            'e_mail' => $this->std_email,
             'fathers_name' => $this->parent->fathers_name,
             'mothers_name' => $this->parent->mothers_name,
-            'fathers_occupation' => $this->parent->fathers_occupation,
+            'father_occupation' => $this->parent->fathers_occupation,
             'admission_date' => $this->created_at,
-            'std_status' => $this->std_status
+            'class' => $this->gradeLevel->name,
+            'section' => $this->section->name,
+            'status' => $this->std_status
         ];
     }
 }
