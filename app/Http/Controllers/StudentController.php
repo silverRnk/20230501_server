@@ -60,12 +60,15 @@ class StudentController extends Controller
             'student_id' => $student->std_ID
         ]);
 
-        $file = $data['std_photo'];
-        // dd($file);
-        $file_name = $student->std_ID.'.'.$file->extension();
-        $file_path = Storage::putFileAs(
-            'student_profile_imgs', $file, $file_name);
-        $student->std_photo = $file_path;
+        if(!empty($data['std_photo'])){
+            $file = $data['std_photo'];
+            // dd($file);
+            $file_name = $student->std_ID.'.'.$file->extension();
+            $file_path = Storage::putFileAs(
+                'student_profile_imgs', $file, $file_name);
+            $student->std_photo = $file_path;
+        }
+        
         $student->save();
         
         return response(['message' => ['student is added successfully']], 201) ;

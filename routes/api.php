@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\api\GradeAndSectionController;
 use App\Http\Controllers\Api\StudentProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,16 +32,34 @@ Route::get('/student/details', [StudentController::class, 'StudentInfo'])->middl
 
 Route::post('/admin/login', [AdminController::class, 'login']);
 
-Route::middleware(['auth:sanctum', 'abilities:admin,level-1'])
-->prefix('admin')
-->group(function(){
-    Route::get('/details', [AdminController::class, 'index']);
-    Route::get('/allStudents', [AdminController::class, 'allStudents']);
-    Route::post('/add_student', [StudentController::class, 'store']);
-    Route::get('/student/{id}', [StudentProfileController::class, 'profile']);
+Route::prefix('v1')->group(function(){
+    //Route for Login
+    Route::post('/admin/login', [AdminController::class, 'login']);
 
-    require_once __DIR__.'/api/TeachersApiRoutes.php';
+    //Route exclusive for admin user only
+    Route::middleware(['auth:sanctum', 'abilities:admin,level-1'])
+    ->prefix('admin')
+    ->group(function(){
+        Route::get('/details', [AdminController::class, 'index']);
+        Route::get('/allStudents', [AdminController::class, 'allStudents']);
+        Route::post('/add_student', [StudentController::class, 'store']);
+        Route::get('/student/{id}', [StudentProfileController::class, 'profile']);
+        Route::get('/gradesAndSections', [GradeAndSectionController::class, 'gradesAndSections']);
+        require_once __DIR__.'/api/TeachersApiRoutes.php';
+    });
 });
+
+Route::middleware(['auth:sanctum', 'abilities:admin,level-1'])
+    ->prefix('admin')
+    ->group(function(){
+        Route::get('/details', [AdminController::class, 'index']);
+        Route::get('/allStudents', [AdminController::class, 'allStudents']);
+        Route::post('/add_student', [StudentController::class, 'store']);
+        Route::get('/student/{id}', [StudentProfileController::class, 'profile']);
+        Route::get('/gradesAndSections', [GradeAndSectionController::class, 'gradesAndSections']);
+        require_once __DIR__.'/api/TeachersApiRoutes.php';
+    });
+
 
 
 

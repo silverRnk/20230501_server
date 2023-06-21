@@ -15,13 +15,18 @@ class StudentProfileResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $img_path = explode('/', $this->std_photo);
+        if(!empty($this->std_photo)){
+            $img_path = explode('/', $this->std_photo)[1];
+        }else{
+            $img_path = "";
+        };
+        
 
         return [
             'id_number' => $this->std_ID,
             'name' => $this->std_name,
             'gender'=> $this->std_gender,
-            'profile_img'=>'/student_img/'.$img_path[1],
+            'profile_img'=>'/student_img/'.$img_path,
             'date_of_birth' => $this->std_date_of_birth,
             'religion' => $this->std_religion,
             'e_mail' => $this->std_email,
