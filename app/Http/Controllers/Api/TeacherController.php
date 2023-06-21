@@ -67,7 +67,7 @@ class TeacherController extends Controller
     {
 
         return new ViewTeacherCollection(
-            Teacher::where('id', $id)->get()
+            Teacher::where('uuid', $id)->get()
         );
     }
 }

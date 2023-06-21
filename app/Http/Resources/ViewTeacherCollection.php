@@ -15,6 +15,8 @@ class ViewTeacherCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         //TODO implement json
-        return parent::toArray($request);
+        return [
+            "data" => TeacherResource::collection($this->collection)
+        ];
     }
 }
