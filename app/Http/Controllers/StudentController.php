@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddUpdateStudentCredential;
+use App\Models\Credential;
 use App\Models\ParentInfo;
 use App\Models\Student;
 use App\Http\Requests\AddStudentRequest;
@@ -23,7 +25,8 @@ class StudentController extends Controller
         // return response(['message' => 'hello'], 200);
         // return StudentResource::collection(Student::all());
         return StudentResource::collection(
-            Student::query()->orderBy('std_ID', 'desc')->paginate(10));
+            Student::query()->orderBy('std_ID', 'desc')->paginate(10)
+        );
     }
 
     /**
@@ -35,7 +38,7 @@ class StudentController extends Controller
 
         /** @var \App\Models\Student $student */
         $student = Student::create([
-            'std_name' => $data['std_first_name'].' '.$data['std_last_name'],
+            'std_name' => $data['std_first_name'] . ' ' . $data['std_last_name'],
             'std_gender' => $data['std_gender'],
             'std_date_of_birth' => $data['std_date_of_birth'],
             'std_religion' => $data['std_religion'],
@@ -44,9 +47,10 @@ class StudentController extends Controller
             'password' => bcrypt($data['std_password']),
             'std_photo' => null,
             'std_status' => 'new',
-            'tchr_Id' => 1, // remove from table add to sections table
+            'tchr_Id' => 1,
+            // remove from table add to sections table
             'grade_level_id' => 'nrs',
-            'section_id'=> '1',
+            'section_id' => '1',
             'school_Id' => 1
         ]);
 
@@ -60,19 +64,22 @@ class StudentController extends Controller
             'student_id' => $student->std_ID
         ]);
 
-        if(!empty($data['std_photo'])){
+        if (!empty($data['std_photo'])) {
             $file = $data['std_photo'];
             // dd($file);
-            $file_name = $student->std_ID.'.'.$file->extension();
+            $file_name = $student->std_ID . '.' . $file->extension();
             $file_path = Storage::putFileAs(
-                'student_profile_imgs', $file, $file_name);
+                'student_profile_imgs',
+                $file,
+                $file_name
+            );
             $student->std_photo = $file_path;
         }
-        
+
         $student->save();
-        
-        return response(['message' => ['student is added successfully']], 201) ;
-        
+
+        return response(['message' => ['student is added successfully']], 201);
+
     }
 
     /**
@@ -89,7 +96,7 @@ class StudentController extends Controller
     public function update(UpdateStudentRequest $request, Student $student)
     {
         $data = $request->validated();
-        if (isset($data['std_Password'])){
+        if (isset($data['std_Password'])) {
             $data['std_Password'] = bcrypt($data['$std_Password']);
         }
 
@@ -106,7 +113,8 @@ class StudentController extends Controller
         return response('', 204);
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
 
         $input = $request->all();
 
@@ -116,14 +124,16 @@ class StudentController extends Controller
         ]);
 
 
-        if ($validation->fails()){
+        if ($validation->fails()) {
             return response()->json(['error' => $validation->errors()], 422);
         }
 
-        if(!Auth::guard('student')->attempt([
-            'std_email' => $input['std_email'],
-            'password' => $input['std_password']
-        ])){
+        if (
+            !Auth::guard('student')->attempt([
+                'std_email' => $input['std_email'],
+                'password' => $input['std_password']
+            ])
+        ) {
             return response([
                 'message' => 'Provided email address or password is incorrect'
             ], 422);
@@ -136,17 +146,48 @@ class StudentController extends Controller
 
     }
 
-    
 
-    public function StudentInfo(){
+    /**
+     * Response with all students information
+     */
+    public function StudentInfo()
+    {
         $user = Auth::user();
         return response()->json(['data' => $user]);
     }
 
-    public function getStudentInfo($std_id){
+    /**
+     * Return response of student information
+     */
+    public function getStudentInfo($std_id)
+    {
 
         $student = Student::where('std_ID', $std_id)->get();
 
         return new StudentResource($student);
+    }
+
+    /**
+     *  Add or Update Student Credentials
+     */
+    public function addOrUpdateStudentCredential(AddUpdateStudentCredential $request)
+    {
+        $data = $request->validated();
+
+        $file = $request->file('file');
+        $newFileName = $data['student_id'].
+        '_'.$data['credential_type'].
+        '.'.$file->extension();
+
+        $filePath = Storage::putFileAs('student_credentials', $file, $newFileName);
+        
+        //Store to DB
+        $credential = Credential::create([
+            'file_name' => $newFileName,
+            'file_path' => $filePath,
+            'std_ID' => $data['student_id']
+        ]);
+
+        return response()->json(['data' => $credential], 201);
     }
 }

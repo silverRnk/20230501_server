@@ -47,5 +47,22 @@ class AddStudentRequest extends FormRequest
             'parents_phone' => ['required']
         ];
     }
+
+    public function method(){
+
+        return [
+            '*.required' => 'Input is required',
+            'gender.in' => 'Input must be either male or female',
+            'email.unique' => 'Email already exists',
+            'email.required' => 'Input is required',
+            'email.email' => 'Must be a valid email',
+            'password.min' => 'Input must be minimum of 6 character',
+            'password.confirmed' => 'Confirm your password',
+            'profile_img.max' => 'Maximum image size must be less than 1Mb',
+            'profile_img.image' => 'File must be an image',
+            'profile_img.file' => 'Uploaded must be a file and an image',
+            '*.date' => 'Invalid Input'
+        ];
+    }
 }
 
