@@ -16,7 +16,7 @@ class AdminController extends Controller
     public function login(AdminLoginRequest $request){
 
         $input = $request->validated();
-        Log::info($input);
+  
 
         // $validation = \Validator::make($input, [
         //     'email' => 'required|email',
@@ -62,9 +62,8 @@ class AdminController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
+    public function admin(Request $request){
+        return $request->user();
     }
 
     /**

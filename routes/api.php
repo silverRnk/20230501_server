@@ -41,6 +41,7 @@ Route::prefix('v1')->group(function(){
     Route::middleware(['auth:sanctum', 'abilities:admin,level-1'])
     ->prefix('admin')
     ->group(function(){
+        Route::get('', [AdminController::class, 'admin']);
         Route::get('/details', [AdminController::class, 'index']);
         Route::get('/allStudents', [AdminController::class, 'allStudents']);
         Route::post('/add_student', [StudentController::class, 'store']);
