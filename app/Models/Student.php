@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -74,6 +75,13 @@ class Student extends Authenticatable
 
     public function parent(): HasOne {
         return $this->hasOne(ParentInfo::class, 'student_id');
+    }
+
+    public function credentials(): HasMany {
+
+        return $this->hasMany(
+            Credential::class, 'std_ID', 'std_ID'
+        );
     }
 
     public function gradeLevel(): BelongsTo {
