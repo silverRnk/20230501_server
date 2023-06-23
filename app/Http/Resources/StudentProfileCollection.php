@@ -17,11 +17,14 @@ class StudentProfileCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
+        
         return [
             'data' => StudentProfileResource::collection($this->collection),
+            // 'data' => new StudentProfileResource($this->resource),
             'grade_levels' => GradeLevelsResource::collection(
                 GradeLevel::query()->orderBy('level', 'asc')->get()
-            )
+            ),
+            'credentials' => CredentialsResource::collection($this->collection),
         ];
     }
 }
