@@ -48,6 +48,7 @@ Route::prefix('v1')->group(function(){
         Route::get('/student/{id}', [StudentProfileController::class, 'profile']);
         Route::get('/gradesAndSections', [GradeAndSectionController::class, 'gradesAndSections']);
         require_once __DIR__.'/api/TeachersApiRoutes.php';
+        require_once __DIR__.'/api/CredentialApiRoutes.php';
     });
 });
 

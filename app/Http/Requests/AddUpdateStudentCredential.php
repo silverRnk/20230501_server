@@ -22,6 +22,7 @@ class AddUpdateStudentCredential extends FormRequest
     public function rules(): array
     {
         return [
+            'credential_id' => ['nullable'],
             'student_id' => ['required', 'exists:students,std_ID'],
             'credential_type' => ['required','in:birth_cert,form_137,good_moral,form_138,report_card'],
             'file' => ['required','file']

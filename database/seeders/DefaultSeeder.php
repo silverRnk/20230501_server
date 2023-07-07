@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Credential;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Admin;
@@ -58,10 +59,25 @@ class DefaultSeeder extends Seeder
             'parents_religion' => 'baptist',
             'student_id' => $stdId
         ];
-
-
         ParentModel::create($parent);
 
+        $birthCert = [
+            'std_ID' => $stdId,
+            'credential_type' => 'birth_cert',
+            'file_name' => 'Test_Credentials.pdf',
+            'file_path' => 'student_credentials/Test_Credentials.pdf'
+        ];
+
+        Credential::create($birthCert);
+
+        $form137 = [
+            'std_ID' => $stdId,
+            'credential_type' => 'form_137',
+            'file_name' => 'Test_Credentials.pdf',
+            'file_path' => 'student_credentials/Test_Credentials.pdf'
+        ];
+
+        Credential::create($form137);
 
     }
 }
