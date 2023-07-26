@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\api\EnrollmentController;
 use App\Http\Controllers\api\GradeAndSectionController;
 use App\Http\Controllers\Api\StudentProfileController;
 use Illuminate\Http\Request;
@@ -50,6 +51,9 @@ Route::prefix('v1')->group(function(){
         require_once __DIR__.'/api/TeachersApiRoutes.php';
         require_once __DIR__.'/api/CredentialApiRoutes.php';
     });
+
+    //Routes for Student Enrollment
+    Route::post('/enroll', [EnrollmentController::class, 'enroll']);
 });
 
 Route::middleware(['auth:sanctum', 'abilities:admin,level-1'])

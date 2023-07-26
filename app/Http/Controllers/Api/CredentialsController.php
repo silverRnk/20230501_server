@@ -51,8 +51,11 @@ class CredentialsController extends Controller
                 ->delete();
         }
 
-        // dd($fileName);
+        //Suffix the credential with version number
+        //then store the file
+        //Check if file not exists
         if (is_null($credential)) {
+            
             $fileName = $fileNamePrefix.'_v1'.
             '.'.$file->extension();
 
@@ -83,20 +86,23 @@ class CredentialsController extends Controller
             }
 
             
-            if(Storage::getVisibility($credential->file_path) === 'private'){
+            // if(Storage::getVisibility($credential->file_path) === 'private'){
 
-            }
-
+            // }
+            //Create a suffix the new version number
             $fileName = $fileNamePrefix.
             '_v'.(string)$versionNumber.
             '.'.$file->extension();
             
+            //Delete the old version
             if(Storage::exists($credential->file_path)){
                 Storage::delete($credential->file_path);
             }
 
-            
+            //Save the new file
             $filePath = Storage::putFileAs('public/student_credentials/'.$data['student_id'], $file, $fileName,);
+            
+            //Update DB
             $isSuccessful = $credential->update(
                 [
                     'file_name' => $fileName,
